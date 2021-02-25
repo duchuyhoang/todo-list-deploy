@@ -6,7 +6,6 @@ import Footer from "./Footer";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 export default function Todo() {
-  const [editId, setEditId] = useState<number>(-1);
   const [filterStatus, setFilterStatus] = useState<string>("All");
   const [isCheckAll, setIsCheckAll] = useState<boolean>(false);
   const [getLocalData, updateLocalData] = useLocalStorage("todo");
@@ -14,13 +13,17 @@ export default function Todo() {
 
   //   Use callback to remmerber this func because everytime you update state this function is a new one so when it pass to TodoForm Component is will make it re-render.
 
+
+  useEffect(() => {
+    let data: ITodoItem[] = getLocalData();
+    changeCheckAllState(data);
+    setList(data);
+  }, []);
+
   useEffect(() => {
     updateLocalData(list);
   }, [list]);
 
-  useEffect(() => {
-    setList(getLocalData());
-  }, []);
   const addTodo = useCallback(
     (description: string) => {
       setList([
@@ -35,26 +38,16 @@ export default function Todo() {
     [list]
   );
 
-  const setEditingId = (id: number) => {
-    setEditId(id);
-  };
-
   const deleteById = (id: number) => {
-    setList(list.filter((item) => item.id !== id));
+    let newList: ITodoItem[] = list.filter((item) => item.id !== id);
+    newList.length == 0 && setIsCheckAll(false);
+    setList(newList);
   };
 
-  const editById = (id: number, text: string) => {
-    const itemIndex = list.findIndex((todo) => todo.id === id);
-    if (Number.isInteger(itemIndex)) {
-      let a = [...list];
-
-      a.splice(itemIndex, 1, {
-        id: list[itemIndex].id,
-        description: text,
-        isCompleted: list[itemIndex].isCompleted,
-      });
-      setList(a);
-    }
+  const changeCheckAllState = (list: ITodoItem[]) => {
+    if (list.filter((item) => !item.isCompleted).length === 0)
+      setIsCheckAll(true);
+    else setIsCheckAll(false);
   };
 
   const tickBox = (id: number, status: boolean) => {
@@ -64,6 +57,8 @@ export default function Todo() {
       let a = [...list];
 
       a.splice(itemIndex, 1, { ...list[itemIndex], isCompleted: status });
+
+      changeCheckAllState(a);
 
       setList(a);
     }
@@ -109,15 +104,15 @@ export default function Todo() {
 
   return (
     <section className="todo-container">
-      <h1>What's is the Plan for Today?</h1>
-
-      <TodoForm addTodo={addTodo} checkAll={checkAll} />
+      <TodoForm
+        addTodo={addTodo}
+        checkAll={checkAll}
+        isCheckAll={isCheckAll}
+        canRenderIconCheckAll={list.length > 0}
+      />
 
       <TodoList
         list={filterList(list, filterStatus)}
-        editingId={editId}
-        setEditingId={setEditingId}
-        editById={editById}
         deleteItem={deleteById}
         tickABox={tickBox}
       />
@@ -125,6 +120,7 @@ export default function Todo() {
         filterStatus={filterStatus}
         setFilterStatus={setFilterStatus}
         itemLeft={filterList(list, "Activated").length}
+        canRender={list.length > 0}
       />
     </section>
   );

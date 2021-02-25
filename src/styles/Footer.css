@@ -1,28 +1,29 @@
-.item-left {
-    margin-left: 10px;
-    color: #fff;
-    font-size:13px;
+.footer {
+    color: #777;
+    padding: 10px 15px;
+    box-shadow: 0 1px 1px rgb(0 0 0 / 20%), 0 8px 0 -3px #f6f6f6, 0 9px 1px -3px rgb(0 0 0 / 20%), 0 16px 0 -6px #f6f6f6, 0 17px 2px -6px rgb(0 0 0 / 20%);
 }
 
 .filter-button {
-    padding: 7px 20px;
+    padding: 3px 7px;
     cursor: pointer;
     border-radius: 5px;
     outline: none;
     border: none;
-    width: 80px;
-    color: #fff;
+    color: #777;
+    margin:0 5px;
     background-color: transparent;
+}
 
+.filter-button:hover{
+    border:1px solid rgba(175,47,47,.2);
 }
-.mt-10{
-    margin-top: 10px;
-}
+
 .button-activate {
-    background: #fff;
-    color: black;
+    border:1px solid rgba(175,47,47,.2);
+
 }
 
 .filter-button-container {
-    width: 80%;
+    width: 70%;
 }
