@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const useLocalStorage = (key: string): any[] => {
-  const [keyLocal, setKey] = useState<string>(key);
-  useEffect(() => {}, []);
+  const [keyLocal] = useState<string>(key);
   const getData = () => {
     const local = localStorage.getItem(keyLocal);
     if (typeof local === "string") {

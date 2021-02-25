@@ -4,9 +4,11 @@ import "../styles/TodoForm.css";
 interface IFormProp {
   addTodo: (description: string) => void;
   checkAll: () => void;
+  isCheckAll: boolean;
+  canRenderIconCheckAll:boolean
 }
 export default React.memo(function TodoForm(props: IFormProp) {
-  const { addTodo, checkAll } = props;
+  const { addTodo, checkAll, isCheckAll,canRenderIconCheckAll } = props;
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -14,11 +16,17 @@ export default React.memo(function TodoForm(props: IFormProp) {
   }, []);
 
   return (
-    <div className="d-flex form-container align-center">
-      <input type="checkbox" id="checkAll" />
-      <label htmlFor="checkAll" className="checkAll" onClick={checkAll}></label>
+    <div className="d-flex align-center header">
+      <input
+        type="checkbox"
+        id="checkAll"
+        checked={isCheckAll}
+        onChange={() => {}}
+      />
+      <label htmlFor="checkAll" className={`checkAll ${!canRenderIconCheckAll &&"icon-check-all-disable"}`} onClick={checkAll}></label>
       <input
         className="input-field"
+        placeholder="Todo List"
         ref={inputRef}
         onKeyPress={(e) => {
           if (e.key === "Enter") {
@@ -29,18 +37,6 @@ export default React.memo(function TodoForm(props: IFormProp) {
           }
         }}
       />
-      <button
-        className="input-button"
-        onClick={(e) => {
-          if (inputRef.current) {
-            let value = inputRef.current.value.trim();
-            if (value !== "") addTodo(value);
-            if (inputRef.current) inputRef.current.value = "";
-          }
-        }}
-      >
-        Add
-      </button>
     </div>
   );
 });

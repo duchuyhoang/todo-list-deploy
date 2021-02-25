@@ -2,57 +2,47 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #fff;
-  background: linear-gradient(90deg,
-      rgba(255, 118, 20, 1) 0%,
-      rgba(255, 84, 17, 1) 100%);
-
+  color: #4D4D4D;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   padding: 16px 9px 16px 0px;
-  border-radius: 5px;
-  width: 90%;
-  margin: 4px auto;
-}
-
-.todo-item:nth-child(4n + 1) {
-  background: linear-gradient(90deg,
-      rgba(93, 12, 255, 1) 0%,
-      rgba(155, 0, 250, 1) 100%);
-}
-
-.todo-item:nth-child(4n + 2) {
-  background: linear-gradient(90deg,
-      rgba(255, 12, 241, 1) 0%,
-      rgba(250, 0, 135, 1) 100%);
-}
-
-.todo-item:nth-child(4n + 3) {
-  background: linear-gradient(90deg,
-      rgba(20, 159, 255, 1) 0%,
-      rgba(17, 122, 255, 1) 100%);
+  border-bottom: 1px solid #ededed;
+  transition: color 0.4s;
 }
 
 .item-description {
   width: 85%;
   text-align: left;
   word-break: break-all;
-  
+  font-weight: 700;
 }
-.item-complete{
+
+.item-complete {
   text-decoration: line-through;
-  opacity: 0.4;
+  color: #d9d9d9;
 }
-.todo-list-container{
-  height:50vh;
-  overflow-y: auto;
+
+.icon-container {
+  margin-right: 15px;
 }
-.icon-container svg:hover {
+
+.todo-item svg {
   color: red;
-  cursor: pointer
+  display: none;
+  font-weight: bold;
+  position: absolute;
+}
+
+.todo-item svg:hover {
+  color: rgb(161, 16, 16);
+  cursor: pointer;
+}
+
+.todo-item:hover svg {
+  display: block;
 }
 
 .tick-container {
-  width: 5%;
-
+  margin: 10px;
 }
 
 input[type="checkbox"] {
@@ -66,7 +56,7 @@ input[type="checkbox"] {
   border-radius: 50%;
   display: block;
   position: relative;
-  border: 2px solid white;
+  border: 1px solid #4D4D4D;
   cursor: pointer;
 }
 
@@ -76,6 +66,6 @@ input[type="checkbox"]:checked+.label-checkbox:after {
   position: absolute;
   top: 0px;
   left: 4.5px;
-  color: #fff;
+  color: green;
 
 }

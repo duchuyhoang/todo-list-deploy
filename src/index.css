@@ -24,7 +24,5 @@ body{
   .todo-container{
      width: 100%!important;
   }
-  .tick-container{
-    width: 12%!important;
-  }
+  
 }
